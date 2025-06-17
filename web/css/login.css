@@ -1,81 +1,4 @@
-.slider-container {
-    overflow: hidden;
-    width: 100%;
-    max-width: 800px; /* 加宽容器 */
-    height: 500px;
-    position: relative;
-    margin: 20px auto;
-    border-radius: 15px;
-    background: #f8f9fa; /* 添加浅色背景 */
-}
-
-
-.slider-track {
-    display: flex;
-    width: 200%;
-    height: 100%;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    perspective: 1000px; 
-    position: absolute; 
-}
-
-.form-panel-login {
-    width: 50%;
-    height: 100%;
-    padding: 40px;
-    box-sizing: border-box;
-    position: relative;
-    transform-style: preserve-3d; 
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    align-items: left;
-}
-
-.form-panel-register {
-    width: 50%;
-    height: 100%;
-    padding: 40px;
-    box-sizing: border-box;
-    position: relative;
-    transform-style: preserve-3d; 
-    display: flex;
-    flex-direction: column;
-    justify-content: right;
-    align-items: right;
-}
-
-
-.login-box {
-    width: 30%;
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-
-.switch-btn {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    color: #1a73e8;
-    font-weight: 500;
-}
-
-.slider-track { 
-    display: flex;
-    width: 200%;
-    height: 100%;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    perspective: 1000px;
-}
-
-
+/* 基础样式 */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
@@ -86,57 +9,129 @@ body {
     margin: 0;
 }
 
+/* 容器样式 */
+.slider-container {
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    position: relative;
+    margin: 20px auto;
+    border-radius: 15px;
+    background: #f8f9fa;
+}
 
-        h2 {
-            text-align: center;
-            color: #1a73e8;
-            margin-bottom: 1.5rem;
-        }
+.form-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
+/* 表单面板通用样式 */
+.form-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 1;
+}
 
-        input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+/* 登录表单特定样式 */
+.login-form {
+    left: 0;
+}
 
-        input:focus {
-            outline: none;
-            border-color: #1a73e8;
-        }
+/* 注册表单特定样式 */
+.register-form {
+    left: 50%;
+}
 
-        button {
-            width: 100%;
-            padding: 0.8rem;
-            background: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+/* 登录框样式 */
+.login-box {
+    width: 75%;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-        button:hover {
-            background: #1557b0;
-        }
+/* 覆盖层样式 */
+.slider-overlay {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: #dcdcdc;
+    z-index: 2;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    left: 0;
+}
 
-        .links {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-        }
+/* 表单元素样式 */
+h2 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 1.5rem;
+}
 
-        a {
-            color: #1a73e8;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
+.input-group {
+    margin-bottom: 1.5rem;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: #1a73e8;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background: #1557b0;
+}
+
+.links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    color: #1a73e8;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 激活状态样式 */
+.login-form.active ~ .slider-overlay {
+    transform: translateX(0);
+}
+
+.register-form.active ~ .slider-overlay {
+    transform: translateX(100%);
+}
