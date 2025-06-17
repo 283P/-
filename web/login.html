@@ -34,12 +34,12 @@
             <div class="form-panel register-form">
                 <div class="login-box">
                     <h2>用户注册</h2>
-                    <form>
+                    <form id="registerForm" action="/register" method="POST">
                         <div class="input-group">
-                            <input type="text" placeholder="用户名" required>
+                            <input type="text" name="username" placeholder="用户名" required>
                         </div>
                         <div class="input-group">
-                            <input type="password" placeholder="密码" required>
+                            <input type="password" name="password" placeholder="密码" required>
                         </div>
                         <div class="input-group">
                             <input type="password" placeholder="确认密码" required>
@@ -56,33 +56,6 @@
         </div>
         
     </div>
-    <script>
-        document.querySelectorAll('.switch-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = btn.dataset.target;
-                
-                // 反转逻辑：点击注册显示登录，点击登录显示注册
-                const showLogin = target === 'register';
-                
-                document.querySelectorAll('.form-panel').forEach(panel => {
-                    panel.classList.remove('active');
-                });
-                
-                // 统一使用login-form/register-form类名
-                const activePanel = showLogin 
-                    ? document.querySelector('.login-form')
-                    : document.querySelector('.register-form');
-                    
-                activePanel.classList.add('active');
-                
-                // 直接控制覆盖层位置
-                const overlay = document.querySelector('.slider-overlay');
-                overlay.style.transform = showLogin 
-                    ? 'translateX(0)' 
-                    : 'translateX(100%)';
-            });
-        });
-    </script>
+    <script src="js/login.js"></script>
 </body>
 </html>
