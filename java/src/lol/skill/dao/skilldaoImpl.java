@@ -1,6 +1,5 @@
 package lol.skill.dao;
 
-import lol.DButil.DButil;
 import lol.skill.entity.skillclass;
 
 import java.sql.Connection;
@@ -14,16 +13,10 @@ public class skilldaoImpl implements skilldao {
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
-    public skilldaoImpl() {
-        try {
-            conn = DButil.getConnction();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
     @Override
+    /*插入数据*/
     public int insert(skillclass skillclass) {
         String sql = "insert into skill(skill_ID, champion_ID, skill_name, skill_type, cooldown, skill_effect) values(?, ?, ?, ?, ?, ?)";
         try {
@@ -41,6 +34,7 @@ public class skilldaoImpl implements skilldao {
         return 0;
     }
     @Override
+    /*更新数据*/
     public int update(skillclass skillclass) {
         String sql = "update skill set skill_name=?, skill_type=?, cooldown=?, skill_effect=? where skill_ID=?";
         try {
@@ -57,6 +51,7 @@ public class skilldaoImpl implements skilldao {
         return 0;
     }
     @Override
+    /*删除数据*/
     public int delete(String skill_ID) {
         String sql = "delete from skill where skill_ID=?";
         try {
@@ -69,6 +64,7 @@ public class skilldaoImpl implements skilldao {
         return 0;
     }
     @Override
+    /*查询数据*/
     public skillclass select(String skill_ID) {
         String sql = "select * from skill where skill_ID=?";
         try {
@@ -92,6 +88,7 @@ public class skilldaoImpl implements skilldao {
         return null;
     }
     @Override
+    /*查询所有数据*/
     public List<skillclass> select() {
         String sql = "select * from skill";
         try {
@@ -115,6 +112,7 @@ public class skilldaoImpl implements skilldao {
         return null;
     }
     @Override
+    /*删除所有数据*/
     public int deleteAll() {
         String sql = "delete from skill";
         try {

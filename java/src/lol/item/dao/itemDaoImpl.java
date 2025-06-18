@@ -13,7 +13,9 @@ public class itemDaoImpl implements itemdao {
     private Connection conn;
     private PreparedStatement pstmt;
     private ResultSet rs;
+    private itemclass item;
     @Override
+    /*插入数据*/
     public void insert(itemclass itemclass) {
         String sql="insert into item values(?,?,?,?)";
         try {
@@ -29,6 +31,7 @@ public class itemDaoImpl implements itemdao {
         }
     }
     @Override
+    /*更新数据*/
     public void update(itemclass itemclass) {
         String sql="update item set item_name=?,item_type=?,item_cost=? where item_ID=?";
         try {
@@ -44,6 +47,7 @@ public class itemDaoImpl implements itemdao {
         }
     }
     @Override
+    /*删除数据*/
     public void delete(itemclass itemclass) {
         String sql="delete from item where item_ID=?";
         try {
@@ -59,6 +63,7 @@ public class itemDaoImpl implements itemdao {
 
 
     @Override
+    /*id查询数据*/
     public itemclass select(String item_ID) {
         String sql="select * from item where item_ID=?";
         try {
@@ -75,6 +80,7 @@ public class itemDaoImpl implements itemdao {
         return null;
     }
     @Override
+    /*查询所有数据*/
     public List<itemclass> selectAll() {
         String sql="select * from item";
         try {

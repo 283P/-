@@ -4,7 +4,7 @@ public class playerclass {
     String player_ID;
     String champion_ID;
     String player_rank;
-    String plyaer_name;
+    String player_name;
 
     public playerclass() {
 
@@ -28,23 +28,23 @@ public class playerclass {
     public void setPlayer_rank(String player_rank) {
         this.player_rank = player_rank;
     }
-    public String getPlyaer_name() {
-        return plyaer_name;
+    public String getPlayer_name() {
+        return player_name;
     }
-    public void setPlyaer_name(String plyaer_name) {
-        this.plyaer_name = plyaer_name;
+    public void setPlayer_name(String player_name) {
+        this.player_name = player_name;
     }
-    public playerclass(String player_ID, String champion_ID, String player_rank, String plyaer_name) {
+    public playerclass(String player_ID, String champion_ID, String player_rank, String player_name) {
         this.player_ID = player_ID;
         this.champion_ID = champion_ID;
         this.player_rank = player_rank;
-        this.plyaer_name = plyaer_name;
+        this.player_name = player_name;
     }
     @Override
     public String toString() {
-        return "playerclass [player_ID=" + player_ID + ", champion_ID=" + champion_ID + ", player_rank=" + player_rank
-                + ", plyaer_name=" + plyaer_name + ", getPlayer_ID()=" + getPlayer_ID() + ", getChampion_ID()="
-                + getChampion_ID() + ", getPlayer_rank()=" + getPlayer_rank() + ", getPlyaer_name()=" + getPlyaer_name()
+        return "player_class [player_ID=" + player_ID + ", champion_ID=" + champion_ID + ", player_rank=" + player_rank
+                + ", player_name=" + player_name + ", getPlayer_ID()=" + getPlayer_ID() + ", getChampion_ID()="
+                + getChampion_ID() + ", getPlayer_rank()=" + getPlayer_rank() + ", getPlayer_name()=" + getPlayer_name()
                 + "]";
     }
     

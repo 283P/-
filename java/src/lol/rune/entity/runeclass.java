@@ -29,7 +29,7 @@ public class runeclass {
     public void setRune_tier(String rune_tier) {
         this.rune_tier = rune_tier;
     }
-    public int getRune_effect() {
+    public String  getRune_effect() {
         return rune_effect;
     }
     public void setRune_effect(String rune_effect) {

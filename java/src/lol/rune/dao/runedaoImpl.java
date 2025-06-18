@@ -14,14 +14,15 @@ public abstract class runedaoImpl implements runedao {
     private PreparedStatement pstmt;
     private ResultSet rs;
     @Override
+    /*插入数据*/
     public int insert(runeclass rune) {
-        String sql = "insert into rune(rune_ID, rune_name, rune_type, rune_price, rune_description) values(?, ?, ?, ?, ?)";
+        String sql = "insert into rune(rune_ID, rune_name, rune_type, rune_effect,rune_tier) values(?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, rune.getRune_ID());
             ps.setString(2, rune.getRune_name());
             ps.setString(3, rune.getRune_type());
-            ps.setInt(4, rune.getRune_effect());
+            ps.setString(4, rune.getRune_effect());
             ps.setString(5, rune.getRune_tier());
             return ps.executeUpdate();
         } catch (SQLException e) {
@@ -33,13 +34,14 @@ public abstract class runedaoImpl implements runedao {
 
 
     @Override
+    /*更新数据*/
     public int update(runeclass rune) {
-        String sql = "update rune set rune_name=?, rune_type=?, rune_price=?, rune_description=? where rune_ID=?";
+        String sql = "update rune set rune_name=?, rune_type=?, rune_effect=?, rune_tier=? where rune_ID=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, rune.getRune_name());
             ps.setString(2, rune.getRune_type());
-            ps.setInt(3, rune.getRune_effect());
+            ps.setString(3, rune.getRune_effect());
             ps.setString(4, rune.getRune_tier());
             ps.setString(5, rune.getRune_ID());
             return ps.executeUpdate();
@@ -49,6 +51,7 @@ public abstract class runedaoImpl implements runedao {
         return 0;
     }
     @Override
+    /*删除数据*/
     public int delete(String rune_ID) {
         String sql = "delete from rune where rune_ID=?";
         try {
@@ -61,6 +64,7 @@ public abstract class runedaoImpl implements runedao {
         return 0;
     }
     @Override
+    /*id查询数据*/
     public runeclass select(String rune_ID) {
         String sql = "select * from rune where rune_ID=?";
         try {
@@ -82,6 +86,7 @@ public abstract class runedaoImpl implements runedao {
         return null;
     }
     @Override
+    /*查询所有数据*/
     public List<runeclass> select() {
         String sql = "select * from rune";
         try {
