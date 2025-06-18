@@ -1,22 +1,23 @@
 package lol.skill.dao;
 
+import lol.DButil.DButil;
+import lol.skill.entity.skillclass;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import lol.skill.entity.skillclass;
-import lol.util.DBUtil;
-
-public class skilldaoImpl {
+public class skilldaoImpl implements skilldao {
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
     public skilldaoImpl() {
         try {
-            conn = DBUtil.getConnection();
-        } catch (SQLException e) {
+            conn = DButil.getConnction();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -31,7 +32,7 @@ public class skilldaoImpl {
             ps.setString(2, skillclass.getChampion_ID());
             ps.setString(3, skillclass.getSkill_name());
             ps.setString(4, skillclass.getSkill_type());
-            ps.setInt(5, skillclass.getCooldown());
+            ps.setString(5, skillclass.getCooldown());
             ps.setString(6, skillclass.getSkill_effect());
             return ps.executeUpdate();
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class skilldaoImpl {
             ps = conn.prepareStatement(sql);
             ps.setString(1, skillclass.getSkill_name());
             ps.setString(2, skillclass.getSkill_type());
-            ps.setInt(3, skillclass.getCooldown());
+            ps.setString(3, skillclass.getCooldown());
             ps.setString(4, skillclass.getSkill_effect());
             ps.setString(5, skillclass.getSkill_ID());
             return ps.executeUpdate();
@@ -80,7 +81,7 @@ public class skilldaoImpl {
                 skillclass.setChampion_ID(rs.getString("champion_ID"));
                 skillclass.setSkill_name(rs.getString("skill_name"));
                 skillclass.setSkill_type(rs.getString("skill_type"));
-                skillclass.setCooldown(rs.getInt("cooldown"));
+                skillclass.setCooldown(rs.getString("cooldown"));
                 skillclass.setSkill_effect(rs.getString("skill_effect"));
                 return skillclass;
             }
@@ -103,7 +104,7 @@ public class skilldaoImpl {
                 skillclass.setChampion_ID(rs.getString("champion_ID"));
                 skillclass.setSkill_name(rs.getString("skill_name"));
                 skillclass.setSkill_type(rs.getString("skill_type"));
-                skillclass.setCooldown(rs.getInt("cooldown"));
+                skillclass.setCooldown(rs.getString("cooldown"));
                 skillclass.setSkill_effect(rs.getString("skill_effect"));
                 skillclassList.add(skillclass);
             }

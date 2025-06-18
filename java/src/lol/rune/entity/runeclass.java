@@ -6,6 +6,11 @@ public class runeclass {
     private String rune_tier;
     private String rune_effect;
     private String rune_name;
+
+    public runeclass() {
+
+    }
+
     public String getRune_ID() {
         return rune_ID;
     }
@@ -24,7 +29,7 @@ public class runeclass {
     public void setRune_tier(String rune_tier) {
         this.rune_tier = rune_tier;
     }
-    public String getRune_effect() {
+    public int getRune_effect() {
         return rune_effect;
     }
     public void setRune_effect(String rune_effect) {

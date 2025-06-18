@@ -1,5 +1,14 @@
 package lol.item.dao;
 
+import lol.DButil.DButil;
+import lol.item.entity.itemclass;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class itemDaoImpl implements itemdao {
     private Connection conn;
     private PreparedStatement pstmt;
@@ -8,7 +17,7 @@ public class itemDaoImpl implements itemdao {
     public void insert(itemclass itemclass) {
         String sql="insert into item values(?,?,?,?)";
         try {
-            conn=DButil.getConnction();
+            conn= DButil.getConnction();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, itemclass.getItem_ID());
             pstmt.setString(2, itemclass.getItem_name());
@@ -46,6 +55,9 @@ public class itemDaoImpl implements itemdao {
             e.printStackTrace();
         }
     }
+
+
+
     @Override
     public itemclass select(String item_ID) {
         String sql="select * from item where item_ID=?";
@@ -79,16 +91,7 @@ public class itemDaoImpl implements itemdao {
         }
         return null;
     }
-    @Override
-    public void close() {
-        try {
-            if(rs!=null) rs.close();
-            if(pstmt!=null) pstmt.close();
-            if(conn!=null) conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }
 
 
