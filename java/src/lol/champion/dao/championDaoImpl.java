@@ -14,6 +14,7 @@ public class championDaoImpl implements championinter {
     private PreparedStatement pstmt;
     private ResultSet rs;
     @Override
+    /*插入数据*/
     public void insert(championclass championclass) {
         String sql="insert into champion values(?,?,?,?,?)";
         try {
@@ -30,6 +31,7 @@ public class championDaoImpl implements championinter {
         }
     }
     @Override
+    /*更新数据*/
     public void update(championclass championclass) {
         String sql="update champion set champion_name=?,role=?,attacktype=?,skill_intro=? where champion_ID=?";
         try {
@@ -46,6 +48,7 @@ public class championDaoImpl implements championinter {
         }
     }
     @Override
+    /*删除数据*/
     public void delete(championclass championclass) {
         String sql="delete from champion where champion_ID=?";
         try {
@@ -58,6 +61,7 @@ public class championDaoImpl implements championinter {
         }
     }
     @Override
+    /*通过英雄id查询数据*/
     public championclass select(String champion_ID) {
         String sql="select * from champion where champion_ID=?";
         try {
@@ -80,6 +84,7 @@ public class championDaoImpl implements championinter {
         return null;
     }
     @Override
+    /*查询所有数据*/
     public List<championclass> selectAll() {
         String sql="select * from champion";
         try {
