@@ -5,6 +5,11 @@ public class playerclass {
     String champion_ID;
     String player_rank;
     String plyaer_name;
+
+    public playerclass() {
+
+    }
+
     public String getPlayer_ID() {
         return player_ID;
     }

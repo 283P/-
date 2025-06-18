@@ -7,6 +7,11 @@ public class skillclass {
     private String skill_type;
     private String cooldown;
     private String skill_effect;
+
+    public skillclass() {
+
+    }
+
     public String getSkill_ID() {
         return skill_ID;
     }

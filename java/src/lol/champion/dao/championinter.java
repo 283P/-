@@ -1,5 +1,7 @@
 package lol.champion.dao;
 
+import lol.champion.entity.championclass;
+
 import java.util.List;
 
 public interface championinter {

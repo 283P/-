@@ -1,5 +1,9 @@
 package lol.skill.dao;
 
+import lol.skill.entity.skillclass;
+
+import java.util.List;
+
 public interface skilldao {
     /**
      * 插入

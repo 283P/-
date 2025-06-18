@@ -1,8 +1,8 @@
 package lol.matchrecord.dao;
 
-import java.util.List;
-
 import lol.matchrecord.entity.matchrecordclass;
+
+import java.util.List;
 
 public interface matchrecorddao {
     /**
@@ -31,4 +31,6 @@ public interface matchrecorddao {
      * @return
      */
     public matchrecordclass select(String match_ID);
+
+    void delete(String match_ID);
 }

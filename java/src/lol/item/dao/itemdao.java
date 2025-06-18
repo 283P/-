@@ -1,5 +1,9 @@
 package lol.item.dao;
 
+import lol.item.entity.itemclass;
+
+import java.util.List;
+
 public interface itemdao {
     /** 插入 */
     public void insert(itemclass itemclass);

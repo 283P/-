@@ -22,7 +22,7 @@ public class matchrecordclass {
     public void setMatch_goldearnd(String match_goldearnd) {
         this.match_goldearnd = match_goldearnd;
     }
-    public matchrecordclass(String match_ID, String match_result, String match_goldearnd) {
+    public matchrecordclass(String match_ID, String match_result, String match_goldearnd, String matchCost) {
         this.match_ID = match_ID;
         this.match_result = match_result;
         this.match_goldearnd = match_goldearnd;

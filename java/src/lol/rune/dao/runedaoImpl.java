@@ -1,37 +1,46 @@
 package lol.rune.dao;
 
+import lol.rune.entity.runeclass;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import lol.rune.entity.rune;
-
-public class runedaoImpl implements runedao {
+public abstract class runedaoImpl implements runedao {
     private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
     @Override
-    public int insert(rune rune) {
+    public int insert(runeclass rune) {
         String sql = "insert into rune(rune_ID, rune_name, rune_type, rune_price, rune_description) values(?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, rune.getRune_ID());
             ps.setString(2, rune.getRune_name());
             ps.setString(3, rune.getRune_type());
-            ps.setInt(4, rune.getRune_price());
-            ps.setString(5, rune.getRune_description());
+            ps.setInt(4, rune.getRune_effect());
+            ps.setString(5, rune.getRune_tier());
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
+
+
+
     @Override
-    public int update(rune rune) {
+    public int update(runeclass rune) {
         String sql = "update rune set rune_name=?, rune_type=?, rune_price=?, rune_description=? where rune_ID=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, rune.getRune_name());
             ps.setString(2, rune.getRune_type());
-            ps.setInt(3, rune.getRune_price());
-            ps.setString(4, rune.getRune_description());
+            ps.setInt(3, rune.getRune_effect());
+            ps.setString(4, rune.getRune_tier());
             ps.setString(5, rune.getRune_ID());
             return ps.executeUpdate();
         } catch (SQLException e) {
@@ -52,19 +61,19 @@ public class runedaoImpl implements runedao {
         return 0;
     }
     @Override
-    public rune select(String rune_ID) {
+    public runeclass select(String rune_ID) {
         String sql = "select * from rune where rune_ID=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, rune_ID);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                rune rune = new rune();
+                runeclass rune = new runeclass();
                 rune.setRune_ID(rs.getString("rune_ID"));
                 rune.setRune_name(rs.getString("rune_name"));
                 rune.setRune_type(rs.getString("rune_type"));
-                rune.setRune_price(rs.getInt("rune_price"));
-                rune.setRune_description(rs.getString("rune_description"));
+                rune.setRune_effect(rs.getString("rune_effect"));
+                rune.setRune_tier(rs.getString("rune_tier"));
                 return rune;
             }
         } catch (SQLException e) {
@@ -73,19 +82,19 @@ public class runedaoImpl implements runedao {
         return null;
     }
     @Override
-    public List<rune> select() {
+    public List<runeclass> select() {
         String sql = "select * from rune";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            List<rune> runeList = new ArrayList<rune>();
+            List<runeclass> runeList = new ArrayList<runeclass>();
             while (rs.next()) {
-                rune rune = new rune();
+                runeclass rune = new runeclass();
                 rune.setRune_ID(rs.getString("rune_ID"));
                 rune.setRune_name(rs.getString("rune_name"));
                 rune.setRune_type(rs.getString("rune_type"));
-                rune.setRune_price(rs.getInt("rune_price"));
-                rune.setRune_description(rs.getString("rune_description"));
+                rune.setRune_effect(rs.getString("rune_effect"));
+                rune.setRune_tier(rs.getString("rune_tier"));
                 runeList.add(rune);
             }
             return runeList;
@@ -94,6 +103,7 @@ public class runedaoImpl implements runedao {
         }
         return null;
     }
+
 
 
 

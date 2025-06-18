@@ -1,6 +1,8 @@
 package lol.rune.dao;
 
-import lol.rune.entity.rune;
+import lol.rune.entity.runeclass;
+
+import java.util.List;
 
 public interface runedao {
     /**
@@ -8,13 +10,13 @@ public interface runedao {
      * @param rune
      * @return
      */
-    public int insert(rune rune);
+    public int insert(runeclass rune);
     /**
      * 更新
      * @param rune
      * @return
      */
-    public int update(rune rune);
+    public int update(runeclass rune);
     /**
      * 删除
      * @param rune_ID
@@ -26,15 +28,11 @@ public interface runedao {
      * @param rune_ID
      * @return
      */
-    public rune select(String rune_ID);
+    public runeclass select(String rune_ID);
     /**
      * 查询所有
      * @return
      */
-    public List<rune> select();
-    /**
-     * 删除所有
-     * @return
-     */
-    public int deleteAll();
+    public List<runeclass> select();
+
 }

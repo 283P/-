@@ -1,5 +1,14 @@
 package lol.champion.dao;
 
+import lol.DButil.DButil;
+import lol.champion.entity.championclass;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class championDaoImpl implements championinter {
     private Connection conn;
     private PreparedStatement pstmt;
@@ -8,7 +17,7 @@ public class championDaoImpl implements championinter {
     public void insert(championclass championclass) {
         String sql="insert into champion values(?,?,?,?,?)";
         try {
-            conn=DButil.getConnction();
+            conn= DButil.getConnction();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, championclass.getChampion_ID());
             pstmt.setString(2, championclass.getChampion_name());
@@ -93,15 +102,7 @@ public class championDaoImpl implements championinter {
         }
         return null;
     }
-    @Override
-    public void close() {
-        try {
-            if(rs!=null) rs.close();
-            if(pstmt!=null) pstmt.close();
-            if(conn!=null) conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }
 

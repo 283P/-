@@ -1,15 +1,23 @@
 package lol.player.dao;
 
-import java.util.List;
-
+import lol.DButil.DButil;
 import lol.player.entity.playerclass;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class playerdaoImpl implements playerdao {
+    private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
     @Override
     public int insert(playerclass player) {
         String sql="insert into player(player_ID,champion_ID,player_rank,plyaer_name) values(?,?,?,?)";
         try {
-            conn=DButil.getConnction();
+            conn= DButil.getConnction();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, player.getPlayer_ID());
             pstmt.setString(2, player.getChampion_ID());
@@ -19,7 +27,7 @@ public class playerdaoImpl implements playerdao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DButil.close(conn, pstmt, null);
+            DButil.close(conn);
         }
         return 0;
     }
@@ -37,7 +45,7 @@ public class playerdaoImpl implements playerdao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DButil.close(conn, pstmt, null);
+            DButil.close(conn);
         }
         return 0;
     }
@@ -52,7 +60,7 @@ public class playerdaoImpl implements playerdao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DButil.close(conn, pstmt, null);
+            DButil.close(conn);
         }
         return 0;
     }
@@ -75,7 +83,7 @@ public class playerdaoImpl implements playerdao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DButil.close(conn, pstmt, rs);
+            DButil.close(conn);
         }
         return null;
     }
@@ -99,7 +107,7 @@ public class playerdaoImpl implements playerdao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DButil.close(conn, pstmt, rs);
+            DButil.close(conn);
         }
         return null;
     }
