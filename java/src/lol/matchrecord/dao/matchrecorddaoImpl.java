@@ -23,10 +23,27 @@ public class matchrecorddaoImpl implements matchrecorddao{
             conn=DButil.getConnction();
             pstmt=conn.prepareStatement(sql);
             rs=pstmt.executeQuery();
+
+            // 处理结果集
+            while(rs.next()) {
+                list.add(new matchrecordclass(
+                    rs.getString("match_ID"),
+                    rs.getString("match_result"),
+                    rs.getString("match_goldearned")
+                ));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            // 关闭资源
+            try {
+                if(rs != null) rs.close();
+                if(pstmt != null) pstmt.close();
+                if(conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        ;
         return list;
     }  ;
     @Override
@@ -39,7 +56,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
             pstmt.setString(1, match_ID);
             rs=pstmt.executeQuery();
             if(rs.next()){
-                return new matchrecordclass(rs.getString("match_ID"),rs.getString("match_name"),rs.getString("match_type"),rs.getString("match_cost"));
+                return new matchrecordclass(rs.getString("match_ID"),rs.getString("match_result"),rs.getString("match_goldearned"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,7 +66,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
     @Override
     /*插入数据*/
     public void insert(matchrecordclass matchrecordclass) {
-        String sql="insert into matchrecord(match_ID,match_name,match_type,match_cost) values(?,?,?,?)";
+        String sql="insert into matchrecord(match_ID,match_result,match_goldearned) values(?,?,?)";
         try {
             conn=DButil.getConnction();
             pstmt=conn.prepareStatement(sql);
@@ -60,20 +77,28 @@ public class matchrecorddaoImpl implements matchrecorddao{
         } catch (Exception e) {
             e.printStackTrace();
         }
-    };
+    }
     @Override
     /*更新数据*/
     public void update(matchrecordclass matchrecordclass) {
-        String sql="update matchrecord set match_name=?,match_type=?,match_cost=? where match_ID=?";
+        String sql="update matchrecord set match_result=?,match_goldearned=? where match_ID=?";
         try {
             conn=DButil.getConnction();
             pstmt=conn.prepareStatement(sql);
-            pstmt.setString(1, matchrecordclass.getMatch_ID());
-            pstmt.setString(2, matchrecordclass.getMatch_result());
-            pstmt.setString(3, matchrecordclass.getMatch_goldearned());
+            // 修正参数顺序：1.result 2.gold 3.ID
+            pstmt.setString(1, matchrecordclass.getMatch_result());
+            pstmt.setString(2, matchrecordclass.getMatch_goldearned());
+            pstmt.setString(3, matchrecordclass.getMatch_ID());
             pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     };
     @Override
