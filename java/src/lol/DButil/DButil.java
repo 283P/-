@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 
 public class DButil {
     /*连接到数据库 */
-    public static Connection getConnction(){
+    public static Connection getConnection(){
         Connection conn=null;
-        String url="jdbc:mysql://localhost:3306/lol?serverTimezone=UTC&useSSL=false";
+        String url="jdbc:mysql://localhost:3306/lol";
         String username="root";
         String password="114514";
         try {

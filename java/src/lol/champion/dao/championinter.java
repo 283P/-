@@ -9,8 +9,12 @@ public interface championinter {
     public void insert(championclass championclass);
     /** 更新 */
     public void update(championclass championclass);
-    /** 删除 */
-    public void delete(championclass championclass);
+    /**
+     * 删除
+     *
+     * @return
+     */
+    public String delete(championclass championclass);
     /** 查询 */
     public championclass select(String champion_ID);
     /** 查询所有 */

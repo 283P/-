@@ -1,6 +1,6 @@
-package lol.item.entity;
+package lol.Item.entity;
 
-public class itemclass {
+public class ItemClass {
     private String item_ID;
     private String item_name;
     private String item_type;
@@ -29,17 +29,17 @@ public class itemclass {
     public void setItem_cost(String item_cost) {
         this.item_cost = item_cost;
     }
-    public itemclass(String item_ID, String item_name, String item_type, String item_cost) {
+    public ItemClass(String item_ID, String item_name, String item_type, String item_cost) {
         this.item_ID = item_ID;
         this.item_name = item_name;
         this.item_type = item_type;
         this.item_cost = item_cost;
     }
-    public itemclass() {
+    public ItemClass() {
     }
     @Override
     public String toString() {
-        return "itemclass [item_ID=" + item_ID + ", item_name=" + item_name + ", item_type=" + item_type
+        return "ItemClass [item_ID=" + item_ID + ", item_name=" + item_name + ", item_type=" + item_type
                 + ", item_cost=" + item_cost + ", getItem_ID()=" + getItem_ID() + ", getItem_name()=" + getItem_name()
                 + ", getItem_type()=" + getItem_type() + ", getItem_cost()=" + getItem_cost() + ", getClass()="
                 + getClass() + "]";

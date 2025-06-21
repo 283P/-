@@ -1,5 +1,6 @@
 package lol.skill.dao;
 
+import lol.DButil.DButil;
 import lol.skill.entity.skillclass;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class skilldaoImpl implements skilldao {
-    private Connection conn;
+    private Connection conn=DButil.getConnection();
     private PreparedStatement ps;
     private ResultSet rs;
 
@@ -50,18 +51,23 @@ public class skilldaoImpl implements skilldao {
         }
         return 0;
     }
-    @Override
+
     /*删除数据*/
+    @Override
     public int delete(String skill_ID) {
         String sql = "delete from skill where skill_ID=?";
-        try {
-            ps = conn.prepareStatement(sql);
+        try (Connection conn = DButil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, skill_ID);
-            return ps.executeUpdate();
+            int affectedRows = ps.executeUpdate();
+            if(affectedRows == 0) {
+                System.out.println("警告: 未找到技能ID " + skill_ID + " 进行删除");
+            }
+            return affectedRows;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("删除技能失败", e);
         }
-        return 0;
     }
     @Override
     /*查询数据*/
@@ -87,29 +93,29 @@ public class skilldaoImpl implements skilldao {
         }
         return null;
     }
-    @Override
     /*查询所有数据*/
+    @Override
     public List<skillclass> select() {
         String sql = "select * from skill";
-        try {
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            List<skillclass> skillclassList = new ArrayList<skillclass>();
+        try (Connection conn = DButil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            List<skillclass> skillclassList = new ArrayList<>();
             while(rs.next()) {
-                skillclass skillclass = new skillclass();
-                skillclass.setSkill_ID(rs.getString("skill_ID"));
-                skillclass.setChampion_ID(rs.getString("champion_ID"));
-                skillclass.setSkill_name(rs.getString("skill_name"));
-                skillclass.setSkill_type(rs.getString("skill_type"));
-                skillclass.setCooldown(rs.getString("cooldown"));
-                skillclass.setSkill_effect(rs.getString("skill_effect"));
-                skillclassList.add(skillclass);
+                skillclass skill = new skillclass();
+                skill.setSkill_ID(rs.getString("skill_ID"));
+                skill.setChampion_ID(rs.getString("champion_ID"));
+                skill.setSkill_name(rs.getString("skill_name"));
+                skill.setSkill_type(rs.getString("skill_type"));
+                skill.setCooldown(rs.getString("cooldown"));
+                skill.setSkill_effect(rs.getString("skill_effect"));
+                skillclassList.add(skill);
             }
             return skillclassList;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("查询所有技能失败", e);
         }
-        return null;
     }
     @Override
     /*删除所有数据*/

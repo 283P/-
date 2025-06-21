@@ -1,5 +1,6 @@
 package lol.rune.dao;
 
+import lol.DButil.DButil;
 import lol.rune.entity.runeclass;
 
 import java.sql.Connection;
@@ -9,16 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class runedaoImpl implements runedao {
-    private Connection conn;
+
+public class runedaoImpl implements runedao {
     private PreparedStatement pstmt;
     private ResultSet rs;
+    private Connection conn = DButil.getConnection();
+
     @Override
-    /*插入数据*/
     public int insert(runeclass rune) {
-        String sql = "insert into rune(rune_ID, rune_name, rune_type, rune_effect,rune_tier) values(?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql="insert into rune(rune_ID, rune_type, rune_tier, rune_effect, rune_name) values(?,?,?,?,?)";
+        try (
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, rune.getRune_ID());
             ps.setString(2, rune.getRune_name());
             ps.setString(3, rune.getRune_type());
@@ -26,9 +28,8 @@ public abstract class runedaoImpl implements runedao {
             ps.setString(5, rune.getRune_tier());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("插入失败", e);
         }
-        return 0;
     }
 
 
@@ -51,17 +52,14 @@ public abstract class runedaoImpl implements runedao {
         return 0;
     }
     @Override
-    /*删除数据*/
-    public int delete(String rune_ID) {
+    public int delete(String rune_ID) throws SQLException {
         String sql = "delete from rune where rune_ID=?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = DButil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, rune_ID);
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0 ? affectedRows : 0;
         }
-        return 0;
     }
     @Override
     /*id查询数据*/
