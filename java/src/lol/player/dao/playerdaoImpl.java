@@ -18,7 +18,7 @@ public class playerdaoImpl implements playerdao {
     public int insert(playerclass player) {
         String sql="insert into player(player_ID,champion_ID,player_rank,player_name) values(?,?,?,?)";
         try {
-            conn = DButil.getConnction();
+            conn = DButil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, player.getPlayer_ID());
             pstmt.setString(2, player.getChampion_ID());
@@ -38,7 +38,7 @@ public class playerdaoImpl implements playerdao {
     public int update(playerclass player) {
         String sql="update player set champion_ID=?,player_rank=?,player_name=? where player_ID=?"; // 修正plyaer_name拼写
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, player.getChampion_ID());
             pstmt.setString(2, player.getPlayer_rank());
@@ -57,7 +57,7 @@ public class playerdaoImpl implements playerdao {
     public int delete(String player_ID) {
         String sql="delete from player where player_ID=?";
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, player_ID);
             return pstmt.executeUpdate();
@@ -74,7 +74,7 @@ public class playerdaoImpl implements playerdao {
     public playerclass select(String player_ID) {
         String sql="select * from player where player_ID=?";
         try {
-            conn = DButil.getConnction();
+            conn = DButil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, player_ID);
             rs = pstmt.executeQuery();
@@ -99,7 +99,7 @@ public class playerdaoImpl implements playerdao {
     public List<playerclass> select() {
         String sql="select * from player";
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             rs=pstmt.executeQuery();
             List<playerclass> playerclasses=new ArrayList<playerclass>();

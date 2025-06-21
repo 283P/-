@@ -2,6 +2,7 @@ package lol.rune.dao;
 
 import lol.rune.entity.runeclass;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface runedao {
@@ -22,7 +23,7 @@ public interface runedao {
      * @param rune_ID
      * @return
      */
-    public int delete(String rune_ID);
+    public int delete(String rune_ID) throws SQLException;
     /**
      * 查询
      * @param rune_ID

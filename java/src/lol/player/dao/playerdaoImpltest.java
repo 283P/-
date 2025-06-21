@@ -20,7 +20,7 @@ class PlayerDaoTest {
         dao = new playerdaoImpl();
 
         // 使用原生JDBC插入champion测试数据
-        Connection conn = DButil.getConnction();
+        Connection conn = DButil.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO champion(champion_ID, champion_name) VALUES(?, ?)");
@@ -45,7 +45,7 @@ class PlayerDaoTest {
         dao.delete("test001");
 
         // 清理champion测试数据
-        Connection conn = DButil.getConnction();
+        Connection conn = DButil.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(
                 "DELETE FROM champion WHERE champion_ID = ?");

@@ -20,7 +20,7 @@ class championDaoImplTest {
     @BeforeEach
     void setUp() throws SQLException {
         dao = new championDaoImpl();
-        testConn = DButil.getConnction();
+        testConn = DButil.getConnection();
 
         // 先删除引用表的记录
         testConn.prepareStatement("DELETE FROM player WHERE champion_ID IS NOT NULL").executeUpdate();

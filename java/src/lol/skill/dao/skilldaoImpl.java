@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class skilldaoImpl implements skilldao {
-    private Connection conn=DButil.getConnction();
+    private Connection conn=DButil.getConnection();
     private PreparedStatement ps;
     private ResultSet rs;
 
@@ -56,7 +56,7 @@ public class skilldaoImpl implements skilldao {
     @Override
     public int delete(String skill_ID) {
         String sql = "delete from skill where skill_ID=?";
-        try (Connection conn = DButil.getConnction();
+        try (Connection conn = DButil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, skill_ID);
@@ -97,7 +97,7 @@ public class skilldaoImpl implements skilldao {
     @Override
     public List<skillclass> select() {
         String sql = "select * from skill";
-        try (Connection conn = DButil.getConnction();
+        try (Connection conn = DButil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 

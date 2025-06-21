@@ -14,7 +14,7 @@ import java.util.List;
 public class runedaoImpl implements runedao {
     private PreparedStatement pstmt;
     private ResultSet rs;
-    private Connection conn = DButil.getConnction();
+    private Connection conn = DButil.getConnection();
 
     @Override
     public int insert(runeclass rune) {
@@ -52,17 +52,14 @@ public class runedaoImpl implements runedao {
         return 0;
     }
     @Override
-    /*删除数据*/
-    public int delete(String rune_ID) {
+    public int delete(String rune_ID) throws SQLException {
         String sql = "delete from rune where rune_ID=?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = DButil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, rune_ID);
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0 ? affectedRows : 0;
         }
-        return 0;
     }
     @Override
     /*id查询数据*/

@@ -3,6 +3,7 @@ package lol.rune.dao;
 import lol.rune.entity.runeclass;
 import org.junit.jupiter.api.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,15 +60,28 @@ class RunedaoImplTest {
 
     @Test
     @Order(5)
-    void testDelete() {
+    void testDelete() throws SQLException {
+        // 确保测试数据存在，不存在则插入
+        if(dao.select("test001") == null) {
+            dao.insert(testRune);
+        }
+
+        // 验证初始数据存在
+        assertNotNull(dao.select("test001"), "删除前测试数据必须存在");
+
+        // 执行删除
         int result = dao.delete("test001");
-        assertEquals(1, result);
-        
-        assertNull(dao.select("test001"));
+        assertEquals(1, result, "应成功删除1条记录");
+
+        // 验证删除结果
+        assertNull(dao.select("test001"), "删除后查询应返回null");
+
+        // 验证重复删除
+        assertEquals(0, dao.delete("test001"), "重复删除应返回0");
     }
 
     @AfterAll
-    void cleanup() {
+    void cleanup() throws SQLException {
         // 清理测试数据
         dao.delete("test001");
     }

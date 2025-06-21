@@ -20,7 +20,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
         String sql="select * from matchrecord";
         List<matchrecordclass> list=new ArrayList<matchrecordclass>();
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             rs=pstmt.executeQuery();
 
@@ -51,7 +51,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
     public matchrecordclass select(String match_ID) {
         String sql="select * from matchrecord where match_ID=?";
         try {
-            conn= DButil.getConnction();
+            conn= DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, match_ID);
             rs=pstmt.executeQuery();
@@ -68,7 +68,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
     public void insert(matchrecordclass matchrecordclass) {
         String sql="insert into matchrecord(match_ID,match_result,match_goldearned) values(?,?,?)";
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, matchrecordclass.getMatch_ID());
             pstmt.setString(2, matchrecordclass.getMatch_result());
@@ -83,7 +83,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
     public void update(matchrecordclass matchrecordclass) {
         String sql="update matchrecord set match_result=?,match_goldearned=? where match_ID=?";
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             // 修正参数顺序：1.result 2.gold 3.ID
             pstmt.setString(1, matchrecordclass.getMatch_result());
@@ -106,7 +106,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
     public void delete(matchrecordclass matchrecordclass) {
         String sql="delete from matchrecord where match_ID=?";
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, matchrecordclass.getMatch_ID());
             pstmt.executeUpdate();
@@ -119,7 +119,7 @@ public class matchrecorddaoImpl implements matchrecorddao{
     public void delete(String match_ID) {
         String sql="delete from matchrecord where match_ID=?";
         try {
-            conn=DButil.getConnction();
+            conn=DButil.getConnection();
             pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, match_ID);
             pstmt.executeUpdate();

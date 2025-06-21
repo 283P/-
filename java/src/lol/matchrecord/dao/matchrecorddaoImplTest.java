@@ -20,7 +20,7 @@ public class matchrecorddaoImplTest {
     @BeforeEach
     public void setUp() throws SQLException {
         dao = new matchrecorddaoImpl();
-        testConn = DButil.getConnction();
+        testConn = DButil.getConnection();
 
         // 清空测试数据
         testConn.prepareStatement("DELETE FROM matchrecord").executeUpdate();
