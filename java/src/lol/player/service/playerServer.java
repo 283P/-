@@ -10,5 +10,11 @@ public interface playerServer {
     String addplayer(playerclass player);
     String updateplayer(playerclass player);
 
+    String addPlayer(String playerId, String playerName, String rank);
+
+    String updatePlayer(String playerId, String newName, String newRank);
+
+    String deletePlayer(String playerId);
+
     String getPlayerRank(String username);
 }

@@ -12,4 +12,7 @@ public interface matchrecordServer {
     String updateMatchRecord(matchrecordclass record);
 
     int getTotalMatches(String username);
+
+    // 新增插入方法
+    boolean insertMatchRecord(String playerId, String result, int goldEarned, String championName);
 }

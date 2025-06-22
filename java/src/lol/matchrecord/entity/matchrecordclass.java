@@ -4,9 +4,32 @@ public class matchrecordclass {
     String match_ID;
     String match_result;
     String match_goldearned;
-
+    private String Player_ID;
+    private String Match_result;
+    private int Match_goldearned;
+    private String Champion_name;
     public matchrecordclass() {
 
+    }
+
+    public String getPlayer_ID() {
+        return Player_ID;
+    }
+
+    public void setPlayer_ID(String player_ID) {
+        Player_ID = player_ID;
+    }
+
+    public void setMatch_goldearned(int match_goldearned) {
+        Match_goldearned = match_goldearned;
+    }
+
+    public String getChampion_name() {
+        return Champion_name;
+    }
+
+    public void setChampion_name(String champion_name) {
+        Champion_name = champion_name;
     }
 
     public String getMatch_ID() {

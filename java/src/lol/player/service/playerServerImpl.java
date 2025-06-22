@@ -26,25 +26,81 @@ public class playerServerImpl implements playerServer {
 
     @Override
     public String deleteplayer(String playerId) {
-        dao.delete(playerId);
-        return "删除玩家成功";
+        return "";
     }
 
     @Override
+    public String addPlayer(String playerId, String playerName, String rank) {
+        try {
+            playerclass newPlayer = new playerclass();
+            newPlayer.setPlayer_ID(playerId);
+            newPlayer.setPlayer_name(playerName);
+            newPlayer.setPlayer_rank(rank);
+            dao.insert(newPlayer);
+            return "玩家添加成功";
+        } catch (Exception e) {
+            throw new RuntimeException("添加玩家失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String updatePlayer(String playerId, String newName, String newRank) {
+        try {
+            playerclass existingPlayer = dao.select(playerId);
+            if (existingPlayer == null) {
+                return "玩家不存在";
+            }
+            existingPlayer.setPlayer_name(newName);
+            existingPlayer.setPlayer_rank(newRank);
+            dao.update(existingPlayer);
+            return "玩家信息更新成功";
+        } catch (Exception e) {
+            throw new RuntimeException("更新玩家失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String deletePlayer(String playerId) {
+        try {
+            int result = dao.delete(playerId);
+            return result > 0 ? "玩家删除成功" : "玩家不存在";
+        } catch (Exception e) {
+            throw new RuntimeException("删除玩家失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String getPlayerRank(String playerId) {
+        try {
+            playerclass player = dao.select(playerId);
+            // 添加空值检查和默认值
+            if (player == null) {
+                System.err.println("玩家不存在: " + playerId);
+                return "未找到玩家";
+            }
+
+            // 添加字段存在性检查
+            String rank = player.getPlayer_rank();
+            if (rank == null || rank.isEmpty()) {
+                return "未定级";
+            }
+            return rank;
+        } catch (Exception e) {
+            // 添加详细错误日志
+            System.err.println("段位查询失败 [玩家ID:" + playerId + "]");
+            e.printStackTrace();
+            return "查询错误"; // 保持与前端兼容
+        }
+    }
+    @Override
     public String addplayer(playerclass player) {
-        dao.insert(player);
-        return "添加玩家成功";
+        return this.addPlayer(player.getPlayer_ID(), player.getPlayer_name(), player.getPlayer_rank());
     }
 
     @Override
     public String updateplayer(playerclass player) {
-        dao.update(player);
-        return "更新玩家信息成功";
+        return this.updatePlayer(player.getPlayer_ID(), player.getPlayer_name(), player.getPlayer_rank());
     }
 
-    @Override
-    public String getPlayerRank(String username) {
-        playerclass player = dao.select(username); // 假设select方法可以通过username查询玩家
-        return player != null ? player.getPlayer_rank() : "未定级";
-    }
 }
+

@@ -17,7 +17,6 @@ public class DBClient {
 
     public DBClient() throws IOException, InterruptedException {
         socket = new Socket(SERVER_HOST, SERVER_PORT);
-        // 添加socket连接超时设置
         socket.setSoTimeout(5000);  // 设置5秒连接超时
 
         out = new PrintWriter(socket.getOutputStream(), true);
@@ -41,25 +40,6 @@ public class DBClient {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            // 示例：创建多个客户端实例
-            DBClient client1 = new DBClient();
-            DBClient client2 = new DBClient();
-
-            // 分别使用不同客户端进行认证
-            String result1 = client1.authenticate("user1", "pass1");
-            String result2 = client2.authenticate("user2", "pass2");
-
-            System.out.println("客户端1认证结果: " + result1);
-            System.out.println("客户端2认证结果: " + result2);
-
-            client1.disconnect();
-            client2.disconnect();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
     public String sendCommand(String command) throws IOException {
         out.println(command);
@@ -90,6 +70,26 @@ public class DBClient {
             if (in != null) in.close();
             if (socket != null) socket.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            // 示例：创建多个客户端实例
+            DBClient client1 = new DBClient();
+            DBClient client2 = new DBClient();
+
+            // 分别使用不同客户端进行认证
+            String result1 = client1.authenticate("user1", "pass1");
+            String result2 = client2.authenticate("user2", "pass2");
+
+            System.out.println("客户端1认证结果: " + result1);
+            System.out.println("客户端2认证结果: " + result2);
+
+            client1.disconnect();
+            client2.disconnect();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

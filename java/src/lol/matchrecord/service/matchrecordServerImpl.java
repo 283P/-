@@ -14,8 +14,8 @@ public class matchrecordServerImpl implements matchrecordServer {
 
 
     @Override
-    public String deleteMatchRecord(String puuid) {
-        dao.delete(puuid);
+    public String deleteMatchRecord(String match_ID) {
+        dao.delete(match_ID);
         return "删除比赛记录成功";
     }
 
@@ -49,5 +49,23 @@ public class matchrecordServerImpl implements matchrecordServer {
     @Override
     public int getTotalMatches(String username) {
         return dao.select().size();
+    }
+    // 新增插入方法
+    @Override
+    public boolean insertMatchRecord(String playerId, String result, int goldEarned, String championName) {
+        matchrecordclass record = new matchrecordclass();
+        // 假设matchrecordclass有以下字段，请根据实际类定义调整
+        record.setPlayer_ID(playerId);
+        record.setMatch_result(result);
+        record.setMatch_goldearned(goldEarned);
+        record.setChampion_name(championName);
+
+        try {
+            dao.insert(record);
+            return true;
+        } catch (Exception e) {
+            System.err.println("插入记录失败: " + e.getMessage());
+            return false;
+        }
     }
 }
