@@ -413,10 +413,18 @@ class RegisterPanel extends JPanel {
 
         add(new WideScreenLogo(), BorderLayout.NORTH);  // 添加顶部LOGO
 
-        // 添加中心表单面板
+        // 修改中心面板布局
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
-        centerPanel.add(createFormPanel());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;  // 新增：垂直权重
+        gbc.fill = GridBagConstraints.BOTH;  // 修改为双向填充
+        centerPanel.add(createFormPanel(), gbc);
+
         add(centerPanel, BorderLayout.CENTER);
     }
 
@@ -489,7 +497,7 @@ class RegisterPanel extends JPanel {
         formPanel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         gbc.gridx = 0;
@@ -543,9 +551,6 @@ class RegisterPanel extends JPanel {
         gbc.gridy = 3;
         gbc.gridwidth = 1;
         // 在原有表单字段后添加
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
         formPanel.add(createStyledLabel("用户昵称:"), gbc);
 
         gbc.gridx = 1;
@@ -554,14 +559,19 @@ class RegisterPanel extends JPanel {
         styleTextField(nicknameField);
         formPanel.add(nicknameField, gbc);
 
-        // 调整按钮面板位置
+        // 调整按钮面板布局参数
+        gbc.gridy = 4;
         gbc.gridx = 0;
-        gbc.gridy = 4;  // 原gridy=3改为4
         gbc.gridwidth = 3;
+        gbc.weighty = 1.0;  // 分配剩余垂直空间
+        gbc.fill = GridBagConstraints.BOTH;  // 修改为双向填充
+        gbc.anchor = GridBagConstraints.PAGE_END;  // 底部对齐
         formPanel.add(buttonPanel, gbc);
 
         return formPanel;
     }
+
+
 
     private JLabel createStyledLabel(String text) {
         JLabel label = new JLabel(text);
