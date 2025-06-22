@@ -45,7 +45,8 @@ public  class DataDashboard extends JFrame {
 
         try {
             initComponents();
-            loadSummaryData(); // 初始化时加载摘要数据
+            loadSummaryData();
+            loadPlayerProfile();// 初始化时加载摘要数据
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "初始化失败: " + e.getMessage());
         }
@@ -71,6 +72,7 @@ public  class DataDashboard extends JFrame {
             }
         });
     }
+
 
     // 修改卡片创建和引用方式
     // 修改卡片创建方式，直接保留标签引用
@@ -250,30 +252,33 @@ public  class DataDashboard extends JFrame {
         }).start();
     }
 
+    //=== 数据加载方法 ===//
     private void loadPlayerProfile() {
         new Thread(() -> {
             try {
-                Map<String, Object> profile = playerService.getplayerInfo(username);
-                System.out.println("玩家档案原始数据：" + profile);
+                List<Map<String, Object>> allPlayers = playerService.getAllPlayers();
+                System.out.println("全部玩家数据：" + allPlayers);
 
                 SwingUtilities.invokeLater(() -> {
                     DefaultTableModel model = (DefaultTableModel) playerProfileTable.getModel();
                     model.setRowCount(0);
 
-                    if (profile != null && !profile.isEmpty()) {
-                        Object name = profile.getOrDefault("player_name", "N/A");
-                        Object id = profile.getOrDefault("player_id", "N/A");
-                        Object rank = profile.getOrDefault("rank", "未定级");
+                    if (allPlayers != null && !allPlayers.isEmpty()) {
+                        allPlayers.forEach(player -> {
+                            Object name = player.getOrDefault("player_name", "N/A");
+                            Object id = player.getOrDefault("player_id", "N/A");
+                            Object rank = player.getOrDefault("rank", "未定级");
 
-                        System.out.println("加载玩家档案：" + name + "|" + id + "|" + rank);
-
-                        model.addRow(new Object[]{name, id, rank});
+                            System.out.println("加载玩家数据：" + name + "|" + id + "|" + rank);
+                            model.addRow(new Object[]{name, id, rank});
+                        });
+                        playerProfileTable.revalidate();
                         playerProfileTable.repaint();
                     }
                 });
             } catch (Exception e) {
                 System.err.println("玩家档案异常: " + e.getMessage());
-                e.printStackTrace(); // 添加堆栈跟踪
+                e.printStackTrace();
             }
         }).start();
     }
@@ -477,4 +482,3 @@ public  class DataDashboard extends JFrame {
         });
     }
 }
-

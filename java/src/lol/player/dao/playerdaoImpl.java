@@ -92,9 +92,14 @@ public class playerdaoImpl implements playerdao {
         return null;
     }
 
+    // 问题1：select() 方法未实现功能
     @Override
-    /*查询所有数据*/
     public List<playerclass> select() {
+        return List.of();
+    }
+
+    @Override
+    public List<playerclass> selectAll() {
         String sql="select * from player";
         ResultSet rs = null; // 显式声明ResultSet
         try {
@@ -106,8 +111,8 @@ public class playerdaoImpl implements playerdao {
                 playerclass player=new playerclass();
                 player.setPlayer_ID(rs.getString("player_ID"));
                 // 修正拼写错误字段
-                player.setPlayer_name(rs.getString("player_name"));
                 player.setPlayer_rank(rs.getString("player_rank"));
+                player.setPlayer_name(rs.getString("player_name"));
                 players.add(player);
             }
             return players;
@@ -119,5 +124,7 @@ public class playerdaoImpl implements playerdao {
             DButil.close(conn);
         }
     }
+
+
 }
 

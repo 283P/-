@@ -3,7 +3,9 @@ package lol.player.service;
 import lol.player.dao.playerdaoImpl;
 import lol.player.entity.playerclass;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class playerServerImpl implements playerServer {
@@ -100,6 +102,25 @@ public class playerServerImpl implements playerServer {
     @Override
     public String updateplayer(playerclass player) {
         return this.updatePlayer(player.getPlayer_ID(), player.getPlayer_name(), player.getPlayer_rank());
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllPlayers() {
+        try {
+            List<playerclass> players = dao.selectAll();
+            List<Map<String, Object>> result = new ArrayList<>();
+
+            for (playerclass player : players) {
+                Map<String, Object> data = new HashMap<>();
+                data.put("player_id", player.getPlayer_ID());
+                data.put("player_name", player.getPlayer_name());
+                data.put("rank", player.getPlayer_rank());
+                result.add(data);
+            }
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException("获取全部玩家失败: " + e.getMessage());
+        }
     }
 
 }

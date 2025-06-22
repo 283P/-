@@ -2,6 +2,7 @@ package lol.player.service;
 
 import lol.player.entity.playerclass;
 
+import java.util.List;
 import java.util.Map;
 
 public interface playerServer {
@@ -17,4 +18,6 @@ public interface playerServer {
     String deletePlayer(String playerId);
 
     String getPlayerRank(String username);
+
+    List<Map<String, Object>> getAllPlayers();
 }

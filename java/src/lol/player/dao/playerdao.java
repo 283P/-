@@ -1,8 +1,8 @@
 package lol.player.dao;
 
-import java.util.List;
-
 import lol.player.entity.playerclass;
+
+import java.util.List;
 
 public interface playerdao {
     /**
@@ -34,4 +34,6 @@ public interface playerdao {
      * @return
      */
     public List<playerclass> select();
+
+    /*查询所有数据*/ List<playerclass> selectAll();
 }
