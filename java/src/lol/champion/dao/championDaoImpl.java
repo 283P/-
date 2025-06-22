@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class championDaoImpl implements championinter {
 
@@ -118,6 +120,48 @@ public class championDaoImpl implements championinter {
         } catch (SQLException e) {
             throw new RuntimeException("查询所有英雄数据失败", e);
         }
+    }
+    @Override
+    public List<Map<String, Object>> selectChampionStats(String playerId) {
+        String sql = "SELECT c.champion_name, " +
+                "COUNT(*) as games_played, " +
+                "SUM(CASE WHEN mr.match_result = '胜利' THEN 1 ELSE 0 END) as wins " + // 确保匹配中文"胜利"
+                "FROM matchrecord mr " +
+                "JOIN player_match pm ON mr.match_ID = pm.match_ID " +
+                "JOIN champion c ON pm.champion_ID = c.champion_ID " +
+                "WHERE pm.player_ID = ? " +
+                "GROUP BY c.champion_name";
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        try (Connection conn = DButil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, playerId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, Object> stat = new HashMap<>();
+                stat.put("champion_name", rs.getString("champion_name"));
+                stat.put("games_played", rs.getInt("games_played"));
+
+                int wins = rs.getInt("wins");
+                int games = rs.getInt("games_played");
+                // 添加调试输出
+                System.out.println("DEBUG - 英雄:" + stat.get("champion_name")
+                    + " 场次:" + games + " 胜场:" + wins);
+
+                // 计算胜率并保留4位小数
+                stat.put("win_rate", games > 0 ?
+                    Double.parseDouble(String.format("%.4f", (double)wins/games)) : 0.0);
+
+                result.add(stat);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("获取英雄统计数据失败", e);
+        }
+
+        return result;
     }
 }
 

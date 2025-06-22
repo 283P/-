@@ -94,6 +94,7 @@ public class playerdaoImpl implements playerdao {
         }
         return null;
     }
+
     @Override
     /*查询所有数据*/
     public List<playerclass> select() {

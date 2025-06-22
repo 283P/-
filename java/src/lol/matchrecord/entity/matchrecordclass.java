@@ -4,6 +4,11 @@ public class matchrecordclass {
     String match_ID;
     String match_result;
     String match_goldearned;
+
+    public matchrecordclass() {
+
+    }
+
     public String getMatch_ID() {
         return match_ID;
     }

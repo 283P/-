@@ -47,23 +47,6 @@ public class matchrecorddaoImpl implements matchrecorddao{
         return list;
     }  ;
     @Override
-    /*根据ID查询数据*/
-    public matchrecordclass select(String match_ID) {
-        String sql="select * from matchrecord where match_ID=?";
-        try {
-            conn= DButil.getConnection();
-            pstmt=conn.prepareStatement(sql);
-            pstmt.setString(1, match_ID);
-            rs=pstmt.executeQuery();
-            if(rs.next()){
-                return new matchrecordclass(rs.getString("match_ID"),rs.getString("match_result"),rs.getString("match_goldearned"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    };
-    @Override
     /*插入数据*/
     public void insert(matchrecordclass matchrecordclass) {
         String sql="insert into matchrecord(match_ID,match_result,match_goldearned) values(?,?,?)";
@@ -127,4 +110,29 @@ public class matchrecorddaoImpl implements matchrecorddao{
             e.printStackTrace();
         }
     };
+    @Override
+    public List<matchrecordclass> select(String playerId) {
+        String sql = "SELECT * FROM matchrecord mr " +
+                    "JOIN player_match pm ON mr.match_ID = pm.match_ID " +
+                    "WHERE pm.player_ID = ?";
+        try (Connection conn = DButil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, playerId);
+            ResultSet rs = pstmt.executeQuery();
+
+            List<matchrecordclass> records = new ArrayList<>();
+            while (rs.next()) {
+                records.add(new matchrecordclass(
+                    rs.getString("match_ID"),
+                    rs.getString("match_result"),
+                    rs.getString("match_goldearned")
+                    // 如果需要match_time，需要添加到matchrecordclass中
+                ));
+            }
+            return records;
+        } catch (SQLException e) {
+            throw new RuntimeException("查询比赛记录失败", e);
+        }
+    }
 }

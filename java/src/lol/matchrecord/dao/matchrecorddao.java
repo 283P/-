@@ -25,12 +25,8 @@ public interface matchrecorddao {
      * @return
      */
     public List<matchrecordclass> select();
-    /**
-     * 根据ID查询数据
-     * @param match_ID
-     * @return
-     */
-    public matchrecordclass select(String match_ID);
+
+    List<matchrecordclass> select(String username);
 
     void delete(String match_ID);
 }

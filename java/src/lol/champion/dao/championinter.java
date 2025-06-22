@@ -3,6 +3,7 @@ package lol.champion.dao;
 import lol.champion.entity.championclass;
 
 import java.util.List;
+import java.util.Map;
 
 public interface championinter {
     /** 插入 */
@@ -19,4 +20,6 @@ public interface championinter {
     public championclass select(String champion_ID);
     /** 查询所有 */
     public List<championclass> selectAll();
+
+    List<Map<String, Object>> selectChampionStats(String username);
 }
